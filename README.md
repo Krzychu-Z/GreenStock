@@ -3,7 +3,8 @@ Simple air pollution emissions trading market application
 # About
 This project has been created for univeristy purposes. It is a centralised air pollution emissions market application used for trading and viewing prices of various environment toxic gases. The project has been inspired by EU programme for air pollution emissions which aims to reduce the air contamination in Europe. However unlike this programme, which translates any emission to CO2 emission, our system allows for trading different kinds of gases.
 # Authors
-[https://github.com/Krzychu-Z](Krzysztof Żerebecki)
+[https://github.com/Krzychu-Z] (Krzysztof Żerebecki)
+[https://github.com/pompaFunebris] (Jakub Dobosz)
 # Tech Stack
 - Frontend: Vanilla JS + HTML5 + CSS3 + Bootstrap
 - WWW Server: Apache
