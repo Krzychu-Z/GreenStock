@@ -2,6 +2,12 @@
     font-family: 'Barlow', 'sans-serif';
 }
 
+.green {
+    background: -webkit-linear-gradient(#00e1ff, #00ff00);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .header {
     background-color: #494949;
     color: white;
@@ -40,9 +46,6 @@
     font-size: 30px;
     margin: 5px 0 0 0;
     padding: 0 5px 0 5px;
-    background: -webkit-linear-gradient(#00e1ff, #00ff00);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 .sign-button > a {
@@ -51,13 +54,35 @@
 
 #scroll-info {
     font-size: 30px;
-    height: 40px;
+    height: 100%;
+    width: 100%;
+    max-width: none !important;
+    overflow: hidden;
+}
+
+#scroll-info .row {
+    display: flex;
+    width: 200%;
+    animation: tickerh linear 30s infinite;
+}
+
+#scroll-info .row:hover {
+    animation-play-state: paused;
+}
+
+@keyframes tickerh {
+    0% { transform: translate3d(0%, 0, 0); }
+    100% { transform: translate3d(-50%, 0, 0); }
 }
 
 #scroll-info .col {
     border-left: 1px solid #000000;
     border-bottom: 1px solid #000000;
     border-top: 1px solid #000000;
+    flex-shrink: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px;
 }
 
 .share-name, .share-value {
