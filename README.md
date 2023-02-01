@@ -23,7 +23,7 @@ All contributions are welcome however they should be initiated via Git Pull Requ
 - [ ] Create database deployment
 - [ ] Create backend for user login management
 - [ ] Create backend for general audience data
-- [ ] Create backend for populating database (doing simulation of market prices)
+- [ X ] Create backend for populating database (doing simulation of market prices)
 - [ ] Create backend for data manipulation (logged in user only)
 - [ ] Create backend for user specific data
 - [ ] Create backend deployment
