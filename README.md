@@ -13,7 +13,7 @@ This project has been created for univeristy purposes. It is a centralised air p
 - Backend - Frontend communication: REST API JSONs
 - Database: PostgreSQL 15.1
 - Server secrets and database connection: Hashicorp Vault
-- Microservices: Docker + Kubernetes
+- Microservices: Docker + Docker Compose
 - Server OS: Linux
 - Cloud: Google Cloud Project
 - Deployment: Ansible + Docker Compose
