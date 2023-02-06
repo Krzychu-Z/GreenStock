@@ -20,14 +20,14 @@ This project has been created for univeristy purposes. It is a centralised air p
 # Contributions
 All contributions are welcome however they should be initiated via Git Pull Request with exact explanation and Git Diff shown.
 # RoadMap
-- [ ] Create database deployment
+- [X] Create database deployment
 - [ ] Create backend for user login management
 - [ ] Create backend for general audience data
 - [X] Create backend for populating database (doing simulation of market prices)
 - [ ] Create backend for data manipulation (logged in user only)
 - [ ] Create backend for user specific data
-- [ ] Create backend deployment
-- [ ] Create simple webpage with REST API
-- [ ] Create app deployment
-- [ ] Create simple system tasks (backups, etc)
+- [X] Create backend deployment
+- [X] Create simple webpage with REST API
+- [X] Create app deployment
+- [X] Create simple system tasks (backups, etc)
 - [ ] Ready :)
