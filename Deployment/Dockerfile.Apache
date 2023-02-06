@@ -1,0 +1,11 @@
+FROM httpd:2.4.55
+
+WORKDIR /var/www/html
+
+RUN cd /var/www && \
+    chmod -R 775 html && \
+    chown -R root:www-data html
+
+COPY ../Frontend/* .
+
+COPY httpd.conf /usr/local/apache2/conf/httpd.conf

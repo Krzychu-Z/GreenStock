@@ -1,47 +1,15 @@
-import os
 import random
 import string
 import psycopg2
 import re
-import hashlib
+import bcrypt
 
+def get_hashed_password(plain_text_password):
+    # Hash a password for the first time
+    #   (Using bcrypt, the salt is saved into the hash itself)
+    return bcrypt.hashpw(plain_text_password, bcrypt.gensalt())
 
-def random_timestamp(start_year=2017, stop_year=2022, start_month=1, end_month=12):
-    year = str(random.randint(start_year, stop_year))
-    month = str(random.randint(start_month, end_month))
-    day = str(random.randint(1, 28))
-    hour = str(random.randint(0, 23))
-    minute = str(random.randint(0, 59))
-    sec = str(random.randint(0, 59))
-
-    timestamp = year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + sec + '.' + '0'
-    return timestamp
-
-
-def random_timestamps(month_diff=1, day_diff=0):
-    first_date = random_timestamp()
-    month = int(first_date.split('-')[1])
-
-    first_date_2 = first_date.replace(" ", '-')
-    day = int(first_date_2.split('-')[2])
-    year = int(first_date.split('-')[0])
-
-    month = month + month_diff
-    day = day + day_diff
-
-    if day > 28:
-        month = month + 1
-        day = day - 28
-
-    if month > 12:
-        year = year + 1
-        month = month - 12
-
-    second_date = str(year) + '-' + str(month) + '-' + str(day) + ' 23:59:59.999999'
-    return first_date, second_date
-
-
-with open("./text_documents/companies.txt", "r") as companies_f:
+with open("./text_documents/companies_short.txt", "r") as companies_f:
     companies = companies_f.read().split('\n')
 
 max_comp_id = len(companies)
@@ -51,6 +19,8 @@ regex_pass = re.compile('[^a-zA-Z ]')
 
 records = []
 for company in companies:
+    print(company)
+
     mail = regex.sub('', company)
     mail = mail + "@gmail.com"
 
@@ -58,12 +28,17 @@ for company in companies:
     if len(password) < 5:
         password = ''.join(random.choice(string.printable) for i in range(10))
 
-    salt = os.urandom(16)
-    plaintext = password.encode()
-    digest = hashlib.pbkdf2_hmac('sha256', salt, plaintext, 1000)
+    # salt = os.urandom(16)
+    # plaintext = password.encode()
+    # digest = hashlib.pbkdf2_hmac('sha256', salt, plaintext, 1000)
 
-    digest_hex = digest.hex()
-    record = [company, mail, salt.hex(), digest.hex()]
+    # digest_hex = digest.hex()
+
+    password_hash = get_hashed_password(password.encode())
+    #print(password)
+
+    is_admin = 0
+    record = [company, mail, password_hash, is_admin]
     records.append(record)
 
 with open("./text_documents/resources.txt", "r") as resources_f:
@@ -71,9 +46,9 @@ with open("./text_documents/resources.txt", "r") as resources_f:
     resources.pop(-1)
 
 conn = psycopg2.connect(database="postgres",
-                        host="localhost",
+                        host="postgres",
                         user="postgres",
-                        password="postgres",
+                        password="dbAdmin",
                         port="5432")
 
 cursor = conn.cursor()
@@ -84,10 +59,11 @@ try:
             company_id serial primary key,
             company_name varchar(63) unique not null,
             company_mail varchar(255) unique not null,
-            password_salt varchar(63) unique not null,
-            password_hash varchar(64) unique not null
+            password_hash varchar(255) unique not null,
+            is_admin int4
         );
     """)
+    #password_salt varchar(63) unique not null,
 
     cursor.execute("""
         create table resources (
@@ -133,12 +109,22 @@ try:
             min_amount float default 1
         );    
     """)
+
+    cursor.execute("""
+        create table company_resources (
+            company_resource_id serial primary key,
+            company_id int4 references companies(company_id),
+            resource_id int4 references resources(resource_id),
+            stock_amount float not null
+        );    
+    """)
 except:
     print("failed to create one or many tables")
 
 for record in records:
+    print(record)
     cursor.execute("""
-       insert into companies (company_name, company_mail, password_salt, password_hash)
+       insert into companies (company_name, company_mail, password_hash, is_admin)
        values (%s, %s, %s, %s);
     """,
                    (record[0], record[1], record[2], record[3]))
@@ -146,7 +132,6 @@ for record in records:
 # Populate resources table
 for resource in resources:
     pass
-    # print(resources)
     # cursor.execute("insert into resources (resource_name) values (%s);", resource)
     # nie wiem, czemu to nie dziala
 
@@ -169,9 +154,8 @@ for i in range(1, 100):
     resource_id = random.randint(1, max_resource_id)
     quantity = round(random.uniform(5, 1000), 2)
     price_per_ton = round(random.uniform(20, 100), 2)
-    cursor.execute("""insert into transactions (buyer_id, seller_id, resource_id, quantity, price_per_ton, transaction_time)
-                   values (%s, %s, %s, %s, %s, %s);""",
-                   (buyer_id, seller_id, resource_id, quantity, price_per_ton, random_timestamp(2017, 2022)))
+    cursor.execute("""insert into transactions (buyer_id, seller_id, resource_id, quantity, price_per_ton)
+                   values (%s, %s, %s, %s, %s);""", (buyer_id, seller_id, resource_id, quantity, price_per_ton))
 
 for i in range(1, 100):
     buyer_id = round(random.randint(1, max_comp_id), 2)
@@ -179,10 +163,9 @@ for i in range(1, 100):
     quantity = round(random.uniform(5, 1000), 2)
     price_per_ton = round(random.uniform(20, 100), 2)
 
-    first_timestamp, second_timestamp = random_timestamps(random.randint(1, 3))
-    cursor.execute("""insert into buy_offers (buyer_id, resource_id, quantity, price_per_ton, offer_start_date, offer_end_date)
-                   values (%s, %s, %s, %s, %s, %s);""",
-                   (buyer_id, resource_id, quantity, price_per_ton, first_timestamp, second_timestamp))
+    cursor.execute("""insert into buy_offers (buyer_id, resource_id, quantity, price_per_ton)
+                   values (%s, %s, %s, %s);""", (buyer_id, resource_id, quantity, price_per_ton))
+
 
 for i in range(1, 100):
     seller_id = round(random.randint(1, max_comp_id), 2)
@@ -190,9 +173,8 @@ for i in range(1, 100):
     quantity = round(random.uniform(5, 1000), 2)
     price_per_ton = round(random.uniform(20, 100), 2)
 
-    first_timestamp, second_timestamp = random_timestamps(random.randint(1, 3))
-    cursor.execute("""insert into sell_offers (seller_id, resource_id, quantity, price_per_ton, offer_start_date, offer_end_date)
-                   values (%s, %s, %s, %s, %s, %s);""", (seller_id, resource_id, quantity, price_per_ton, first_timestamp, second_timestamp))
+    cursor.execute("""insert into sell_offers (seller_id, resource_id, quantity, price_per_ton)
+                   values (%s, %s, %s, %s);""", (seller_id, resource_id, quantity, price_per_ton))
 conn.commit()
 cursor.close()
 conn.close()

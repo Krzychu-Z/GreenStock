@@ -31,24 +31,25 @@
     font-size: 36px;
 }
 
-.log-button {
+.outer-button {
     font-size: 30px;
     margin: 5px 0 0 auto;
     padding: 0 5px 0 5px;
 }
 
-.log-button > a {
+.outer-button > a {
     color: white;
     text-decoration: none;
 }
 
-.sign-button {
+.inner-button {
     font-size: 30px;
     margin: 5px 0 0 0;
     padding: 0 5px 0 5px;
 }
 
-.sign-button > a {
+.inner-button > a {
+    color: white;
     text-decoration: none;
 }
 
@@ -122,10 +123,6 @@ footer {
     bottom: 0;
     width: 100%;
     border-radius: 10px 10px 0 0;
-}
-
-#footer-info {
-    margin: 40px 0 30px 0;
 }
 
 h1 {

@@ -1,12 +1,51 @@
 $().ready(function(){
     const ctx = document.getElementById('air-chart');
 
-    const data = [];
-    let prev = 100;
-    for (let i = 1930; i < 2030; i++) {
-      prev += 5 - Math.random() * 10;
-      data.push({x: i, y: prev});
+    const data = [{
+      x: 1920,
+      y: 3.52
+    },
+    {
+      x: 1930,
+      y: 3.93
+    },
+    {
+      x: 1940,
+      y: 4.85
+    },
+    {
+      x: 1950,
+      y: 6.00
+    },
+    {
+      x: 1960,
+      y: 9.39
+    },
+    {
+      x: 1970,
+      y: 14.9
+    },
+    {
+      x: 1980,
+      y: 19.5
+    },
+    {
+      x: 1990,
+      y: 22.76
+    },
+    {
+      x: 2000,
+      y: 25.45
+    },
+    {
+      x: 2010,
+      y: 33.36
+    },
+    {
+      x: 2020,
+      y: 35.26
     }
+    ];
 
     const totalDuration = 1000;
     const delayBetweenPoints = totalDuration / data.length;
@@ -76,6 +115,19 @@ $().ready(function(){
                   },
                   scales: {
                     x: {
+                      display: true,
+                      title: {
+                        display: true,
+                        text: 'Years'
+                      },
+                      type: 'linear'
+                    },
+                    y: {
+                      display: true,
+                      title: {
+                        display: true,
+                        text: 'Billion tonnes'
+                      },
                       type: 'linear'
                     }
                   }

@@ -1,0 +1,43 @@
+version: "3.8"
+services:
+  postgres:
+    image: postgres:15.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Admindb
+      - POSTGRES_DB=postgres
+    container_name: postgres
+    volumes:
+      - ../../db-data:/var/lib/postgresql/data     # Do not version database mount place
+    networks:
+      - backend
+    ports:
+      - "5432:5432"
+  dbManagement:
+    build:
+      context: .
+      dockerfile: Dockerfile.DbManagement
+    container_name: db-manager
+    volumes:
+      - ../DbManagement:/manager
+    depends_on:
+      - postgres
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "5000:5000"
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile.Apache
+    container_name: webserver
+    networks:
+      - frontend
+      - backend
+    ports:
+      - "80:80"
+networks:
+  frontend:
+  backend:
