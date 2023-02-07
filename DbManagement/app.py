@@ -6,7 +6,6 @@ from flask_sqlalchemy import SQLAlchemy
 import psycopg2
 from datetime import datetime
 
-#comment2
 DB_HOST = "localhost"
 DB_NAME = "postgres"
 DB_USER = "postgres"
