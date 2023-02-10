@@ -2,11 +2,11 @@ FROM python:3.9.16
 
 WORKDIR /manager
 
-COPY requirements.txt .
+COPY DbManagement/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY ../DbManagement/* .
+COPY DbManagement/* .
 
 ENV FLASK_APP=app.py
 

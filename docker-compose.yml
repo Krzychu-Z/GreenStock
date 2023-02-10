@@ -9,18 +9,16 @@ services:
       - POSTGRES_DB=postgres
     container_name: postgres
     volumes:
-      - ../../db-data:/var/lib/postgresql/data     # Do not version database mount place
+      - ../db-data:/var/lib/postgresql/data     # Do not version database mount place
     networks:
       - backend
     ports:
       - "5432:5432"
-  dbManagement:
+  db_management:
     build:
       context: .
       dockerfile: Dockerfile.DbManagement
     container_name: db-manager
-    volumes:
-      - ../DbManagement:/manager
     depends_on:
       - postgres
     networks:
@@ -38,6 +36,15 @@ services:
       - backend
     ports:
       - "80:80"
+  haproxy:
+    build:
+      context: .
+      dockerfile: Dockerfile.HAProxy
+    container_name: haproxy
+    networks:
+      - frontend
+    ports:
+      - "443:443"
 networks:
   frontend:
   backend:

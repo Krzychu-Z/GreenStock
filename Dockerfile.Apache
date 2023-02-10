@@ -6,6 +6,6 @@ RUN cd /var/www && \
     chmod -R 775 html && \
     chown -R root:www-data html
 
-COPY ../Frontend/* .
+ADD Frontend .
 
-COPY httpd.conf /usr/local/apache2/conf/httpd.conf
+COPY Deployment/httpd.conf /usr/local/apache2/conf/httpd.conf

@@ -4,5 +4,5 @@ FROM haproxy:2.8-dev2
 WORKDIR /etc/haproxy
 
 # Copy configuration file, pem certificate and HAProxy logs
-COPY ../../full.pem /usr/local/etc/haproxy/full.pem
-COPY haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
+COPY Deployment/full.pem /usr/local/etc/haproxy/full.pem
+COPY Deployment/haproxy.cfg /usr/local/etc/haproxy/haproxy.cfg
