@@ -1,3 +1,4 @@
 .idea
 .git
 *.pem
+docker-compose.yml
