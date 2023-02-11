@@ -9,7 +9,7 @@ import psycopg2
 import uuid
 from functools import wraps
 
-DB_HOST = "greenstock_postgres_1"
+DB_HOST = "postgres"
 DB_NAME = "postgres"
 DB_USER = "postgres"
 DB_PASS = "postgres"
