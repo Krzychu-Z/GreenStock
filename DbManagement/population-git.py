@@ -46,7 +46,7 @@ with open("./text_documents/resources.txt", "r") as resources_f:
     resources.pop(-1)
 
 conn = psycopg2.connect(database="postgres",
-                        host="postgres",
+                        host="greenstock_postgres_1",
                         user="postgres",
                         password="dbAdmin",
                         port="5432")
