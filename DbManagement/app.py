@@ -7,15 +7,16 @@ from flask_sqlalchemy import SQLAlchemy
 import os, hashlib
 import psycopg2
 import uuid
+from flask_cors import CORS
 from functools import wraps
 
-DB_HOST = "postgres"
+DB_HOST = "localhost"
 DB_NAME = "postgres"
 DB_USER = "postgres"
 DB_PASS = "postgres"
 
 app = Flask(__name__)
-
+CORS(app)
 
 @app.route('/company', methods=['GET'])
 def get_all_companies():

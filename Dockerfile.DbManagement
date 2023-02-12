@@ -2,6 +2,10 @@ FROM python:3.9.16
 
 WORKDIR /manager
 
+COPY Deployment/cert.crt .
+
+COPY Deployment/private.key .
+
 COPY DbManagement/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt

@@ -1,11 +1,25 @@
-FROM httpd:2.4.55
+FROM centos:7
+
+RUN yum -y update && \
+    yum install -y httpd mod_ssl openssl
 
 WORKDIR /var/www/html
 
 RUN cd /var/www && \
     chmod -R 775 html && \
-    chown -R root:www-data html
+    chown -R root:apache html
 
 ADD Frontend .
 
-COPY Deployment/httpd.conf /usr/local/apache2/conf/httpd.conf
+COPY Deployment/cert.crt /etc/ssl/certs/cert.crt
+
+COPY Deployment/private.key /etc/ssl/certs/private.key
+
+COPY Deployment/httpd.conf /etc/httpd/conf/httpd.conf
+
+COPY Deployment/greenstock.conf /etc/httpd/conf.d/greenstock.conf
+
+RUN chmod +x /etc/ssl/certs/cert.crt && \
+    chmod +x /etc/ssl/certs/private.key
+
+CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
