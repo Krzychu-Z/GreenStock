@@ -3,3 +3,6 @@
 *.pem
 *.crt
 *.key
+.env
+rest_api_env
+__pycache__
