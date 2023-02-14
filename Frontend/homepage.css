@@ -9,7 +9,7 @@
 }
 
 .red {
-    background: -webkit-linear-gradient(#ff3a3a, #ff0000);
+    background: -webkit-linear-gradient(#ff3366, #ff0000);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
