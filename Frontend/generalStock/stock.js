@@ -35,8 +35,9 @@ $().ready(function(){
 
           var dateString = element.time;
           var date = new Date(dateString);
+          var formattedDate = date.getDate() + ":" + (date.getMonth() + 1) + ":" + date.getFullYear().toString().substr(-2) + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
           
-          point.x = date;
+          point.x = formattedDate;
           point.y = element.prices[i].price
 
           data.push(point)
