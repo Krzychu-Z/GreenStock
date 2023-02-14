@@ -11,7 +11,7 @@ $().ready(function(){
       for (var i = 0; i < size; i++) {
 
         // Consider only indices where R value changes
-        if ((i/2) + 1 == double(Math.floor(i/2) + 1)) {
+        if ((i/2) + 1 == Math.floor(i/2) + 1) {
           $("#stocks-box").append('<div class="row"></div>')
         }
 
