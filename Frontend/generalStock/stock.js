@@ -11,7 +11,7 @@ $().ready(function(){
       for (var i = 0; i < size; i++) {
 
         // Consider only indices where R value changes
-        if ((i/2) + 1 == Math.floor(i/2) + 1) {
+        if ((i/3) + 1 == Math.floor(i/3) + 1) {
           $("#stocks-box").append('<div class="row"></div>')
         }
 
@@ -25,7 +25,7 @@ $().ready(function(){
                  </div>'
 
         // ----------------------- Divide area by X skip title ----------
-        $("#stocks-box .row").eq(Math.floor(i/2) + 1).append(base);
+        $("#stocks-box .row").eq(Math.floor(i/3) + 1).append(base);
 
         const ctx = document.getElementById('chart-' + (i + 1));
 
