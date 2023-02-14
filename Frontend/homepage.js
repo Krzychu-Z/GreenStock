@@ -156,7 +156,7 @@ $().ready(function(){
                       </div> \
                     </div>'
 
-        $('#scroll-info > row').append(base)
+        $("#scroll-info > row").append(base)
       });
     });
 })
