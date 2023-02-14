@@ -15,7 +15,7 @@ $().ready(function(){
           $("#stocks-box").append('<div class="row"></div>')
         }
 
-        var base = '<div class="col my-card"> \
+        var base = '<div class="col my-card" style="max-width: 500px"> \
                     <div class="card"> \
                       <div class="card-body"> \
                         <h4 class="card-title text-center"><b>' + responseJSON.ResourcePrices[0].prices[i].resource + '</b></h4> \
@@ -28,8 +28,7 @@ $().ready(function(){
         $("#stocks-box .row").eq(Math.floor(i/3) + 1).append(base);
 
         (function(i) {
-            const ctx = document.getElementById('chart-' + (i + 1)).getContext('2d');
-            ctx.canvas.width = 300;
+            const ctx = document.getElementById('chart-' + (i + 1));
 
             const data = [];
             responseJSON.ResourcePrices.forEach(element => {
