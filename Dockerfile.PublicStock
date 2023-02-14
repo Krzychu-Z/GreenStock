@@ -10,8 +10,8 @@ RUN go mod init main && \
     env GOOS=linux && \
     GARCH=amd64 && \
     CGO_ENABLED=0 && \
-    chmod +x app && \
-    go build -o app .
+    go build -o app . && \
+    chmod +x app 
 
 FROM alpine:3.17.2
 
