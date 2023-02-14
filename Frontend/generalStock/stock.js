@@ -75,8 +75,8 @@ $().ready(function(){
         };
 
         var lineColor = {}
-        console.log(responseJSON.Trends[i].Trend)
-        if (responseJSON.Trends[i].Trend == "green") {
+        console.log(responseJSON.Trends[i].trend)
+        if (responseJSON.Trends[i].trend == "green") {
           lineColor = {
             borderColor: '#00FF00',
             borderWidth: 1,
