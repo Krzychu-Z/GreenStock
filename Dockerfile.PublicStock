@@ -1,15 +1,18 @@
-FROM golang:1.19
+FROM golang:1.19 AS builder
 
 WORKDIR /main
 
 COPY PublicStock .
 
-RUN go build - o app .
+RUN go mod init main && \
+    go get -u github.com/gin-gonic/gin && \
+    go get -u github.com/gin-contrib/cors && \
+    build - o app .
 
 FROM alpine:3.17.2
 
 WORKDIR /root/
 
-COPY --from=0 /main/app ./
+COPY --from=builder /main/app ./
 
 CMD ./app

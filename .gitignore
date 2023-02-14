@@ -7,3 +7,5 @@
 rest_api_env
 __pycache__
 *.exe
+*.mod
+*.sum
