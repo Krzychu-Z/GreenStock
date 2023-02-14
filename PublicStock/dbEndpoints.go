@@ -6,12 +6,26 @@ import (
 	"time"
 	"log"
 	"io/ioutil"
+	"crypto/tls"
 )
 
 
 func GetRequest(endpoint string) []byte  {
+
+	cert, err := tls.LoadX509KeyPair("cert.crt", "private.key")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	transport := &http.Transport{
+		TLSClientConfig: &tls.Config{
+			Certificates: []tls.Certificate{cert},
+		},
+	}
+
 	dbClient := http.Client{
 		Timeout: time.Second * 10,
+		Transport: transport,
 	}
 
 	req, err := http.NewRequest(http.MethodGet, "https://localhost:5000/api/dbManagement" + endpoint, nil)
