@@ -144,7 +144,7 @@ $().ready(function(){
         }
     });
 
-    getData("https://greenstock.pl/api/publicStock/fullHistory").then((response) => response.json())
+    getData("https://greenstock.pl/api/publicStock/fullHistory").then((response) => response.json)
     .then((responseJSON) => {
       responseJSON.Trends.forEach(element => {
         var base = '<div class="col"> \
