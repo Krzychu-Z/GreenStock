@@ -4,22 +4,12 @@ WORKDIR /main
 
 COPY PublicStock .
 
-RUN go mod init main && \
-    go get -u github.com/gin-gonic/gin && \
-    go get -u github.com/gin-contrib/cors && \
-    env GOOS=linux && \
-    GARCH=amd64 && \
-    CGO_ENABLED=0 && \
-    go build -o app . && \
+RUN go build -o app . && \
     chmod +x app 
 
 FROM alpine:3.17.2
 
 WORKDIR /root/
-
-COPY Deployment/cert.crt .
-
-COPY Deployment/private.key .
 
 COPY --from=builder /main/app ./
 
