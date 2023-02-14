@@ -8,6 +8,12 @@
     -webkit-text-fill-color: transparent;
 }
 
+.red {
+    background: -webkit-linear-gradient(#ff3a3a, #ff0000);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .header {
     background-color: #494949;
     color: white;
