@@ -32,8 +32,11 @@ $().ready(function(){
         const data = [];
         responseJSON.ResourcePrices.forEach(element => {
           var point = {}
+
+          var dateString = element.time;
+          var date = new Date(dateString);
           
-          point.x = element.time;
+          point.x = date;
           point.y = element.prices[i].price
 
           data.push(point)
