@@ -35,15 +35,12 @@ $().ready(function(){
 
           var dateString = element.time;
           var date = new Date(dateString);
-          var formattedDate = date.getDate() + ":" + (date.getMonth() + 1) + ":" + date.getFullYear().toString().substr(-2) + " " + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
           
-          point.x = formattedDate;
+          point.x = Math.floor(date.getTime() / 1000);
           point.y = element.prices[i].price
 
           data.push(point)
         });
-
-        console.log(data)
     
         const totalDuration = 1000;
         const delayBetweenPoints = totalDuration / data.length;
