@@ -1,0 +1,15 @@
+FROM golang:1.19
+
+WORKDIR /main
+
+COPY PublicStock .
+
+RUN go build - o app .
+
+FROM alpine:3.17.2
+
+WORKDIR /root/
+
+COPY --from=0 /main/app ./
+
+CMD ./app

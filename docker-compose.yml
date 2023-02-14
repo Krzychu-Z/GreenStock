@@ -23,6 +23,14 @@ services:
     network_mode: "host"
     ports:
       - "5000:5000"
+  public_stock:
+    build:
+      context: .
+      dockerfile: Dockerfile.PublicStock
+    container_name: public-stock
+    network_mode: "host"
+    ports:
+      - "5001:5001"
   webserver:
     build:
       context: .
