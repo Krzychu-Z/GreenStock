@@ -157,7 +157,7 @@ $().ready(function(){
                     </div>'
 
         console.log(base);
-        $("#scroll-info > row").append(base)
+        $("#scroll-info .row").append(base)
       });
     })
     .catch(error => {
