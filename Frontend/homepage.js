@@ -1,4 +1,10 @@
 $().ready(function(){
+
+    // REST API GET
+    async function getData(url) {                    
+      return await fetch(url).then(res => res.json());
+    }
+
     const ctx = document.getElementById('air-chart');
 
     const data = [{
@@ -137,4 +143,11 @@ $().ready(function(){
             inView = false;  
         }
     });
+
+    /*getData("https://greenstock.pl/api/publicStock/fullHistory").then((response) => response.json())
+    .then((responseJSON) => {
+      responseJSON.forEach(element => {
+        
+      });
+    });*/
 })

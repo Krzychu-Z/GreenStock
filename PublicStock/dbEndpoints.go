@@ -80,17 +80,21 @@ func CalculateTrend(dataDump InMinimumPriceHistory) (OutMinimumPriceHistory, err
 		if currentRecord[i].Price >= previousRecord[i].Price {
 			result.Trends = append(result.Trends, struct {
 				Resource string `json:"resource"`
+				Difference int `json:"difference"`
 				Trend    string `json:"trend"`
 			}{
 				Resource: currentRecord[i].Resource,
+				Difference: (int)(currentRecord[i].Price - previousRecord[i].Price),
 				Trend:    "green",
 			})
 		} else {
 			result.Trends = append(result.Trends, struct {
 				Resource string `json:"resource"`
+				Difference int `json:"difference"`
 				Trend    string `json:"trend"`
 			}{
 				Resource: currentRecord[i].Resource,
+				Difference: (int)(currentRecord[i].Price - previousRecord[i].Price),
 				Trend:    "red",
 			})
 		}
