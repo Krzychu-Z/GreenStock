@@ -1,54 +1,44 @@
 $().ready(function(){
-    //          -- 9 should be global variable fetched from API
-    for (var i = 0; i < 12; i++) {
+    // REST API GET
+    async function getData(url) {                    
+      return await fetch(url).then(res => res.json());
+    }
+
+    getData("https://greenstock.pl/api/publicStock/fullHistory") 
+    .then((responseJSON) => {
+      size = len(responseJSON.ResourcePrices[0].prices)
+
+      for (var i = 0; i < size; i++) {
+
+        // Consider only indices where R value changes
+        if ((i/2) + 1 == double(Math.floor(i/2) + 1)) {
+          $("#stocks-box").append('<div class="row"></div>')
+        }
+
+        var base = '<div class="col my-card"> \
+                    <div class="card"> \
+                      <div class="card-body"> \
+                        <h4 class="card-title text-center"><b>' + responseJSON.ResourcePrices[0].prices[i].resource + '</b></h4> \
+                        <canvas id="chart-' + (i + 1) + '"></canvas> \
+                      </div> \
+                    </div> \
+                 </div>'
+
+        // ----------------------- Divide area by X skip title ----------
+        $("#stocks-box:nth-child(" + Math.floor(i/2) + 1 + ")").append(base)
+
         (function(i) {
             const ctx = document.getElementById('chart-' + (i + 1));
 
-            const data = [{
-              x: 1920,
-              y: 3.52
-            },
-            {
-              x: 1930,
-              y: 3.93
-            },
-            {
-              x: 1940,
-              y: 4.85
-            },
-            {
-              x: 1950,
-              y: 6.00
-            },
-            {
-              x: 1960,
-              y: 9.39
-            },
-            {
-              x: 1970,
-              y: 14.9
-            },
-            {
-              x: 1980,
-              y: 19.5
-            },
-            {
-              x: 1990,
-              y: 22.76
-            },
-            {
-              x: 2000,
-              y: 25.45
-            },
-            {
-              x: 2010,
-              y: 33.36
-            },
-            {
-              x: 2020,
-              y: 35.26
-            }
-            ];
+            const data = [];
+            responseJSON.ResourcePrices.forEach(element => {
+              var point = {}
+              
+              point.x = element.time;
+              point.y = element.prices[i].price
+
+              data.append(point)
+            });
         
             const totalDuration = 1000;
             const delayBetweenPoints = totalDuration / data.length;
@@ -83,15 +73,27 @@ $().ready(function(){
             };
     
             if (i <= 5) {
+                var lineColor = {}
+                if (responseJSON.Trends[i].Trend == "green") {
+                  lineColor = {
+                    borderColor: '#00FF00',
+                    borderWidth: 1,
+                    radius: 0,
+                    data: data,
+                  }
+                } else {
+                  lineColor = {
+                    borderColor: '#FF0000',
+                    borderWidth: 1,
+                    radius: 0,
+                    data: data,
+                  }
+                }
+
                 new Chart(ctx, {
                     type: 'line',
                     data: {
-                      datasets: [{
-                        borderColor: '#FF0000',
-                        borderWidth: 1,
-                        radius: 0,
-                        data: data,
-                      }]
+                      datasets: [lineColor]
                     },
                     options: {
                       animation,
@@ -106,7 +108,7 @@ $().ready(function(){
                           display: true,
                           title: {
                             display: true,
-                            text: 'Years'
+                            text: 'Time'
                           },
                           type: 'linear'
                         },
@@ -114,7 +116,7 @@ $().ready(function(){
                           display: true,
                           title: {
                             display: true,
-                            text: 'Billion tonnes'
+                            text: 'Min. price'
                           },
                           type: 'linear'
                         }
@@ -141,15 +143,28 @@ $().ready(function(){
                     if (isScrolledIntoView(chartId) && i > 5) {
                         if (inView) { return; }
                         inView = true;
+
+                        var lineColor = {}
+                        if (responseJSON.Trends[i].Trend == "green") {
+                          lineColor = {
+                            borderColor: '#00FF00',
+                            borderWidth: 1,
+                            radius: 0,
+                            data: data,
+                          }
+                        } else {
+                          lineColor = {
+                            borderColor: '#FF0000',
+                            borderWidth: 1,
+                            radius: 0,
+                            data: data,
+                          }
+                        }
+
                         new Chart(ctx, {
                             type: 'line',
                             data: {
-                              datasets: [{
-                                borderColor: '#FF0000',
-                                   borderWidth: 1,
-                                radius: 0,
-                                data: data,
-                              }]
+                              datasets: [lineColor]
                             },
                             options: {
                               animation,
@@ -164,7 +179,7 @@ $().ready(function(){
                                   display: true,
                                   title: {
                                     display: true,
-                                    text: 'Years'
+                                    text: 'Time'
                                   },
                                   type: 'linear'
                                 },
@@ -172,7 +187,7 @@ $().ready(function(){
                                   display: true,
                                   title: {
                                     display: true,
-                                    text: 'Billion tonnes'
+                                    text: 'Min. Price'
                                   },
                                   type: 'linear'
                                 }
@@ -185,5 +200,9 @@ $().ready(function(){
                 });
             }
         })(i);
-    }
+      }
+    })
+    .catch(error => {
+      console.error(error);
+    });
 });
