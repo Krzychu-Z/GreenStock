@@ -28,7 +28,8 @@ $().ready(function(){
         $("#stocks-box .row").eq(Math.floor(i/3) + 1).append(base);
 
         (function(i) {
-            const ctx = document.getElementById('chart-' + (i + 1));
+            const ctx = document.getElementById('chart-' + (i + 1)).getContext('2d');
+            ctx.canvas.width = 300;
 
             const data = [];
             responseJSON.ResourcePrices.forEach(element => {
@@ -39,8 +40,6 @@ $().ready(function(){
 
               data.push(point)
             });
-
-            console.log(data)
         
             const totalDuration = 1000;
             const delayBetweenPoints = totalDuration / data.length;
@@ -125,6 +124,7 @@ $().ready(function(){
                       }
                     }                
                 });
+
             } else {
                 var inView = false;
         
