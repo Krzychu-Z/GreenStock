@@ -1,6 +1,6 @@
-package GreenStock
+package main
 
-type inMinimumPriceHistory struct {
+type InMinimumPriceHistory struct {
 	ResourcePrices []struct {
 		Time   string `json:"time"`
 		Prices []struct {
@@ -10,7 +10,7 @@ type inMinimumPriceHistory struct {
 	} `json:"ResourcePrices"`
 }
 
-type outMinimumPriceHistory struct {
+type OutMinimumPriceHistory struct {
 	ResourcePrices []struct {
 		Time   string `json:"time"`
 		Prices []struct {
