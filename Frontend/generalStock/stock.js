@@ -6,7 +6,7 @@ $().ready(function(){
 
     getData("https://greenstock.pl/api/publicStock/fullHistory") 
     .then((responseJSON) => {
-      size = len(responseJSON.ResourcePrices[0].prices)
+      size = length(responseJSON.ResourcePrices[0].prices)
 
       for (var i = 0; i < size; i++) {
 
