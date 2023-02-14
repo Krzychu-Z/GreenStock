@@ -156,7 +156,11 @@ $().ready(function(){
                       </div> \
                     </div>'
 
+        console.log(base);
         $("#scroll-info > row").append(base)
       });
+    })
+    .catch(error => {
+      console.error(error);
     });
 })
