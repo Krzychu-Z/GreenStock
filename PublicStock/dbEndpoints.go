@@ -62,6 +62,11 @@ func GetRequest(endpoint string) []byte  {
 
 func CalculateTrend(dataDump InMinimumPriceHistory) (OutMinimumPriceHistory, error) {
 	length := len(dataDump.ResourcePrices)
+
+	if length < 2 {
+		return OutMinimumPriceHistory{}, errors.New("[Abort] Corrupt JSON arrived: data dump does not have enough records")
+	}
+
 	currentRecord := dataDump.ResourcePrices[length - 1].Prices
 	previousRecord := dataDump.ResourcePrices[length - 2].Prices
 
@@ -73,22 +78,6 @@ func CalculateTrend(dataDump InMinimumPriceHistory) (OutMinimumPriceHistory, err
 
 	for i := 0; i < len(currentRecord); i++ {
 		if currentRecord[i].Price >= previousRecord[i].Price {
-			result.ResourcePrices = append(result.ResourcePrices, struct {
-				Time   string `json:"time"`
-				Prices []struct {
-					Resource string  `json:"resource"`
-					Price    float64 `json:"price"`
-				} `json:"prices"`
-			}{
-				Time: dataDump.ResourcePrices[length - 1].Time,
-				Prices: []struct {
-					Resource string  `json:"resource"`
-					Price    float64 `json:"price"`
-				}{ 
-					currentRecord[i],
-				},
-			})
-		
 			result.Trends = append(result.Trends, struct {
 				Resource string `json:"resource"`
 				Trend    string `json:"trend"`
@@ -97,22 +86,6 @@ func CalculateTrend(dataDump InMinimumPriceHistory) (OutMinimumPriceHistory, err
 				Trend:    "green",
 			})
 		} else {
-			result.ResourcePrices = append(result.ResourcePrices, struct {
-				Time   string `json:"time"`
-				Prices []struct {
-					Resource string  `json:"resource"`
-					Price    float64 `json:"price"`
-				} `json:"prices"`
-			}{
-				Time: dataDump.ResourcePrices[length - 1].Time,
-				Prices: []struct {
-					Resource string  `json:"resource"`
-					Price    float64 `json:"price"`
-				}{ 
-					currentRecord[i],
-				},
-			})
-		
 			result.Trends = append(result.Trends, struct {
 				Resource string `json:"resource"`
 				Trend    string `json:"trend"`
@@ -122,6 +95,8 @@ func CalculateTrend(dataDump InMinimumPriceHistory) (OutMinimumPriceHistory, err
 			})
 		}
 	}
+
+	result.ResourcePrices = append(result.ResourcePrices, dataDump.ResourcePrices...)
 
 	return result, nil
 }
