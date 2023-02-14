@@ -15,7 +15,7 @@ $().ready(function(){
           $("#stocks-box").append('<div class="row"></div>')
         }
 
-        var base = '<div class="col my-card"> \
+        var base = '<div class="col my-card" style="max-width: 300px"> \
                     <div class="card"> \
                       <div class="card-body"> \
                         <h4 class="card-title text-center"><b>' + responseJSON.ResourcePrices[0].prices[i].resource + '</b></h4> \
