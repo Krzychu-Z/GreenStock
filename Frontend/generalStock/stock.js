@@ -28,7 +28,7 @@ $().ready(function(){
                  </div>'
 
         // ----------------------- Divide area by X skip title ----------
-        $("#stocks-box:nth-child(" + Math.floor(i/2) + 1 + ")").append(base);
+        $("#stocks-box .row").eq(Math.floor(i/2) + 1).append(base);
 
         (function(i) {
             const ctx = document.getElementById('chart-' + (i + 1));
