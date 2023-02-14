@@ -17,7 +17,7 @@ $().ready(function(){
 
         var base = '<div class="col my-card"> \
                     <div class="card"> \
-                      <div class="card-body"> \
+                      <div class="card-body" style="max-width: 400px"> \
                         <h4 class="card-title text-center"><b>' + responseJSON.ResourcePrices[0].prices[i].resource + '</b></h4> \
                         <canvas id="chart-' + (i + 1) + '"></canvas> \
                       </div> \
@@ -75,6 +75,7 @@ $().ready(function(){
         };
 
         var lineColor = {}
+        console.log(responseJSON.Trends[i].Trend)
         if (responseJSON.Trends[i].Trend == "green") {
           lineColor = {
             borderColor: '#00FF00',
