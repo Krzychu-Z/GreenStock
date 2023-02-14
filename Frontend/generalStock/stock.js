@@ -11,6 +11,9 @@ $().ready(function(){
       for (var i = 0; i < size; i++) {
 
         // Consider only indices where R value changes
+        console.log("First condition: " + i/2 + 1)
+        console.log("Second condition: " + Math.floor(i/2) + 1)
+        console.log("Boolean: " + (i/2 + 1 == Math.floor(i/2) + 1))
         if ((i/2) + 1 == Math.floor(i/2) + 1) {
           $("#stocks-box").append('<div class="row"></div>')
         }
