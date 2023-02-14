@@ -11,10 +11,7 @@ $().ready(function(){
       for (var i = 0; i < size; i++) {
 
         // Consider only indices where R value changes
-        console.log("First condition: " + i/2 + 1)
-        console.log("Second condition: " + Math.floor(i/2) + 1)
-        console.log("Boolean: " + (i/2 + 1 == Math.floor(i/2) + 1))
-        if ((i/2) + 1 == Math.floor(i/2) + 1) {
+        if ((i/3) + 1 == Math.floor(i/3) + 1) {
           $("#stocks-box").append('<div class="row"></div>')
         }
 
@@ -28,7 +25,7 @@ $().ready(function(){
                  </div>'
 
         // ----------------------- Divide area by X skip title ----------
-        $("#stocks-box .row").eq(Math.floor(i/2) + 1).append(base);
+        $("#stocks-box .row").eq(Math.floor(i/3) + 1).append(base);
 
         (function(i) {
             const ctx = document.getElementById('chart-' + (i + 1));
@@ -42,6 +39,8 @@ $().ready(function(){
 
               data.push(point)
             });
+
+            console.log(data)
         
             const totalDuration = 1000;
             const delayBetweenPoints = totalDuration / data.length;
