@@ -73,15 +73,55 @@ func CalculateTrend(dataDump InMinimumPriceHistory) (OutMinimumPriceHistory, err
 
 	for i := 0; i < len(currentRecord); i++ {
 		if currentRecord[i].Price >= previousRecord[i].Price {
-			result.Trends[i].Resource = currentRecord[i].Resource
-			result.Trends[i].Trend = "green"
+			result.ResourcePrices = append(result.ResourcePrices, struct {
+				Time   string `json:"time"`
+				Prices []struct {
+					Resource string  `json:"resource"`
+					Price    float64 `json:"price"`
+				} `json:"prices"`
+			}{
+				Time: dataDump.ResourcePrices[length - 1].Time,
+				Prices: []struct {
+					Resource string  `json:"resource"`
+					Price    float64 `json:"price"`
+				}{ 
+					currentRecord[i],
+				},
+			})
+		
+			result.Trends = append(result.Trends, struct {
+				Resource string `json:"resource"`
+				Trend    string `json:"trend"`
+			}{
+				Resource: currentRecord[i].Resource,
+				Trend:    "green",
+			})
 		} else {
-			result.Trends[i].Resource = currentRecord[i].Resource
-			result.Trends[i].Trend = "red"
+			result.ResourcePrices = append(result.ResourcePrices, struct {
+				Time   string `json:"time"`
+				Prices []struct {
+					Resource string  `json:"resource"`
+					Price    float64 `json:"price"`
+				} `json:"prices"`
+			}{
+				Time: dataDump.ResourcePrices[length - 1].Time,
+				Prices: []struct {
+					Resource string  `json:"resource"`
+					Price    float64 `json:"price"`
+				}{ 
+					currentRecord[i],
+				},
+			})
+		
+			result.Trends = append(result.Trends, struct {
+				Resource string `json:"resource"`
+				Trend    string `json:"trend"`
+			}{
+				Resource: currentRecord[i].Resource,
+				Trend:    "red",
+			})
 		}
 	}
-
-	result.ResourcePrices = dataDump.ResourcePrices
 
 	return result, nil
 }
