@@ -20,7 +20,7 @@ type OutMinimumPriceHistory struct {
 	} `json:"ResourcePrices"`
 	Trends []struct {
 		Resource string `json:"resource"`
-		Difference int `json:"difference"`
+		Difference float64 `json:"difference"`
 		Trend    string `json:"trend"`
 	} `json:"Trends"`
 }

@@ -6,26 +6,14 @@ import (
 	"time"
 	"log"
 	"io/ioutil"
-//	"crypto/tls"
+	"math"
 )
 
 
 func GetRequest(endpoint string) []byte  {
 
-/*	cert, err := tls.LoadX509KeyPair("cert.crt", "private.key")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	transport := &http.Transport{
-		TLSClientConfig: &tls.Config{
-			Certificates: []tls.Certificate{cert},
-		},
-	}
-*/
 	dbClient := http.Client{
 		Timeout: time.Second * 10,
-//		Transport: transport,
 	}
 
 	req, err := http.NewRequest(http.MethodGet, "http://localhost:5000" + endpoint, nil)
@@ -80,21 +68,21 @@ func CalculateTrend(dataDump InMinimumPriceHistory) (OutMinimumPriceHistory, err
 		if currentRecord[i].Price >= previousRecord[i].Price {
 			result.Trends = append(result.Trends, struct {
 				Resource string `json:"resource"`
-				Difference int `json:"difference"`
+				Difference float64 `json:"difference"`
 				Trend    string `json:"trend"`
 			}{
 				Resource: currentRecord[i].Resource,
-				Difference: (int)(currentRecord[i].Price - previousRecord[i].Price),
+				Difference: math.Round((currentRecord[i].Price - previousRecord[i].Price)*100)/100,
 				Trend:    "green",
 			})
 		} else {
 			result.Trends = append(result.Trends, struct {
 				Resource string `json:"resource"`
-				Difference int `json:"difference"`
+				Difference float64 `json:"difference"`
 				Trend    string `json:"trend"`
 			}{
 				Resource: currentRecord[i].Resource,
-				Difference: (int)(currentRecord[i].Price - previousRecord[i].Price),
+				Difference: math.Round((currentRecord[i].Price - previousRecord[i].Price)*100)/100,
 				Trend:    "red",
 			})
 		}
