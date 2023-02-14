@@ -7,7 +7,7 @@ COPY PublicStock .
 RUN go mod init main && \
     go get -u github.com/gin-gonic/gin && \
     go get -u github.com/gin-contrib/cors && \
-    go build - o app .
+    go build -o app .
 
 FROM alpine:3.17.2
 
