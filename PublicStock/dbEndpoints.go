@@ -72,7 +72,7 @@ func CalculateTrend(dataDump InMinimumPriceHistory) (OutMinimumPriceHistory, err
 				Trend    string `json:"trend"`
 			}{
 				Resource: currentRecord[i].Resource,
-				Difference: math.Round((currentRecord[i].Price - previousRecord[i].Price)*100)/100,
+				Difference: math.Abs(math.Round((currentRecord[i].Price - previousRecord[i].Price)*100)/100),
 				Trend:    "green",
 			})
 		} else {
@@ -82,7 +82,7 @@ func CalculateTrend(dataDump InMinimumPriceHistory) (OutMinimumPriceHistory, err
 				Trend    string `json:"trend"`
 			}{
 				Resource: currentRecord[i].Resource,
-				Difference: math.Round((currentRecord[i].Price - previousRecord[i].Price)*100)/100,
+				Difference: math.Abs(math.Round((currentRecord[i].Price - previousRecord[i].Price)*100)/100),
 				Trend:    "red",
 			})
 		}

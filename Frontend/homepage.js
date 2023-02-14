@@ -144,10 +144,19 @@ $().ready(function(){
         }
     });
 
-    /*getData("https://greenstock.pl/api/publicStock/fullHistory").then((response) => response.json())
+    getData("https://greenstock.pl/api/publicStock/fullHistory").then((response) => response.json())
     .then((responseJSON) => {
-      responseJSON.forEach(element => {
-        
+      responseJSON.Trends.forEach(element => {
+        var base = '<div class="col"> \
+                      <div class="share-name"> \
+                        ' + element.resource + ' \
+                      </div> \
+                      <div class="share-value ' + element.trend + '"> \
+                        ' + element.difference + ' \
+                      </div> \
+                    </div>'
+
+        $('#scroll-info > row').append(base)
       });
-    });*/
+    });
 })
