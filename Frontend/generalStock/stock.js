@@ -38,6 +38,8 @@ $().ready(function(){
 
           data.push(point)
         });
+
+        console.log(data)
     
         const totalDuration = 1000;
         const delayBetweenPoints = totalDuration / data.length;
