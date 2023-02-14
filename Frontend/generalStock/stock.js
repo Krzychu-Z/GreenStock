@@ -37,7 +37,7 @@ $().ready(function(){
               point.x = element.time;
               point.y = element.prices[i].price
 
-              data.append(point)
+              data.push(point)
             });
         
             const totalDuration = 1000;
